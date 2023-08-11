@@ -3,7 +3,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:controls="clr-namespace:DAGlyn"
         x:Class="DAGlyn.MainWindow"
+		x:DataType="controls:ConnectionsViewModel"
+		x:CompileBindings="True"
         Title="DAGlyn">
-    Welcome to Avalonia!
+	<Grid>
+		<ItemsControl x:Name="Tester" ItemsSource="{Binding Connections}" IsTabStop="False" >
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="{x:Type controls:ConnectionViewModel}">
+					<controls:Connection Source="{Binding Source.Anchor}"
+                                         Target="{Binding Target.Anchor}" />
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</Grid>
 </Window>
