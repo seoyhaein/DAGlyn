@@ -3,8 +3,7 @@ using Avalonia.Controls;
 
 using System.ComponentModel;
 using System.Collections.ObjectModel;
-using Avalonia.Collections;
-using Avalonia.Media;
+
 
 namespace DAGlyn
 {
@@ -15,6 +14,8 @@ namespace DAGlyn
             InitializeComponent();
             //CreatePendingConnection();
             //Tester.ItemsSource = Setup();
+            var connectionsViewModel = new ConnectionsViewModel();
+            DataContext = connectionsViewModel;
         }
 
         /*private void CreatePendingConnection()
@@ -29,19 +30,18 @@ namespace DAGlyn
 
             PendingConnection pendingConnection = new PendingConnection(sourceAnchor, targetAnchor, strokeDashArray, stroke, strokeThickness, direction, fill);
 
-            // Grid¿¡ Ãß°¡
+            // Gridï¿½ï¿½ ï¿½ß°ï¿½
             var grid = this.FindControl<Grid>("grid");
             grid.Children.Add(pendingConnection);
 
-            // »ý¼ºÇÑ PendingConnection ÀÎ½ºÅÏ½º¸¦ ÄÁÆ®·Ñ Æ®¸®¿¡ Ãß°¡ÇÏ°Å³ª ´Ù¸¥ ÀÛ¾÷À» ¼öÇàÇÕ´Ï´Ù.
-            // ¿¹½Ã: this.Content = pendingConnection;
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PendingConnection ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï°Å³ï¿½ ï¿½Ù¸ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+            // ï¿½ï¿½ï¿½ï¿½: this.Content = pendingConnection;
         }*/
     }
 
     public class ConnectionsViewModel 
     {
         public ObservableCollection<ConnectionViewModel> Connections { get; } = new ObservableCollection<ConnectionViewModel>();
-
         public ConnectionsViewModel()
         {
             Connections.Add(new ConnectionViewModel
@@ -59,7 +59,7 @@ namespace DAGlyn
                 }
             });
         }
-        
+        /*
         public static ObservableCollection<ConnectionViewModel> Setup()
         {
             ObservableCollection<ConnectionViewModel> Connections = new ObservableCollection<ConnectionViewModel>
@@ -82,12 +82,19 @@ namespace DAGlyn
 
             return Connections;
         }
+        */
     }
 
     public class ConnectionViewModel
     {
-        public ConnectorViewModel? Source { get; set; }
-        public ConnectorViewModel? Target { get; set; }
+        public ConnectorViewModel Source { get; set; }
+        public ConnectorViewModel Target { get; set; }
+
+        public ConnectionViewModel()
+        {
+            Source = new ConnectorViewModel();
+            Target = new ConnectorViewModel();
+        }
     }
 
     public class ConnectorViewModel : INotifyPropertyChanged
