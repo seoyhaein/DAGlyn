@@ -8,26 +8,7 @@
         x:DataType="controls:ConnectionsViewModel"
         x:CompileBindings="True"
         Title="DAGlyn">
-	
 	<Grid>
-		<ItemsControl x:Name="Tester" ItemsSource="{Binding Connections}" IsTabStop="False" >
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<Canvas />
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate DataType="{x:Type controls:ConnectionViewModel}">
-					<controls:Connection Source="{Binding Source.Anchor}"
-                                         Target="{Binding Target.Anchor}" />
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
+		<controls:Node Width="100" Height="100"/>
 	</Grid>
-	
-	<!--
-	<Canvas>
-		<controls:Connection Source="10,10" Target="100,100"  />
-	</Canvas>
-	-->
 </Window>

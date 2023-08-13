@@ -9,7 +9,64 @@
         <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
-                <TextBlock Text="Templated Control" />
+                <Border BorderBrush="Black"
+                        BorderThickness="3"
+                        Padding="3"
+                        CornerRadius="3">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--Header-->
+                            <Border BorderThickness="3" BorderBrush="Black"
+                                    CornerRadius="3 3 0 0"
+                                    Grid.ColumnSpan="3"
+                                    Padding="6 4 6 4">
+                                <ContentPresenter Content="Header" />
+                            </Border>
+
+                            <!--Body-->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--Data IN-->
+                                <!--
+                                <ItemsControl ItemsSource="{TemplateBinding Input}"
+                                              ItemTemplate="{TemplateBinding InputConnectorTemplate}"
+                                              Focusable="False" />
+                                -->
+                                <!--Content-->
+                                <Border Grid.Column="1" 
+                                        Padding="16 0 16 0">
+                                    <ContentPresenter Content="Content"/>
+                                </Border>
+
+                                <!--Data OUT-->
+                                <!--
+                                <ItemsControl ItemsSource="{TemplateBinding Output}"
+                                              ItemTemplate="{TemplateBinding OutputConnectorTemplate}"
+                                              Grid.Column="2"
+                                              Focusable="False" />
+                                              -->
+                            </Grid>
+
+                            <!--Footer-->
+                            <Border BorderThickness="3" BorderBrush="Black"
+                                    CornerRadius="0 0 3 3"
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="3"
+                                    Padding="6 4 6 4">
+                                <ContentPresenter Content="Footer" />
+                            </Border>
+                        </Grid>
+                    </Border>
             </ControlTemplate>
         </Setter>
     </Style>

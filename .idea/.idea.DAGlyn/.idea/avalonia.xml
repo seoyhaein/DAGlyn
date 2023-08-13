@@ -3,7 +3,9 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="App.axaml" value="DAGlyn.csproj" />
         <entry key="MainWindow.axaml" value="DAGlyn.csproj" />
+        <entry key="Node.axaml" value="DAGlyn.csproj" />
       </map>
     </option>
   </component>
