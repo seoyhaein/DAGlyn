@@ -9,14 +9,23 @@ namespace DAGlyn
 {
     public partial class MainWindow : Window
     {
+        public ObservableCollection<string> Lists { get; } = new ObservableCollection<string>();
+        
         public MainWindow()
         {
             InitializeComponent();
+            
+            Lists.Add("item1");
+            Lists.Add("item2");
+            Tester.DataContext = Lists;
+
             //CreatePendingConnection();
             //Tester.ItemsSource = Setup();
-            var connectionsViewModel = new ConnectionsViewModel();
-            DataContext = connectionsViewModel;
+            //var connectionsViewModel = new ConnectionsViewModel();
+            //DataContext = connectionsViewModel;
         }
+        
+        
 
         /*private void CreatePendingConnection()
         {
