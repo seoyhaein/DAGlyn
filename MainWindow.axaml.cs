@@ -9,16 +9,10 @@ namespace DAGlyn
 {
     public partial class MainWindow : Window
     {
-        public ObservableCollection<string> Lists { get; } = new ObservableCollection<string>();
-        
         public MainWindow()
         {
             InitializeComponent();
             
-            Lists.Add("item1");
-            Lists.Add("item2");
-            Tester.DataContext = Lists;
-
             //CreatePendingConnection();
             //Tester.ItemsSource = Setup();
             //var connectionsViewModel = new ConnectionsViewModel();
@@ -51,6 +45,9 @@ namespace DAGlyn
     public class ConnectionsViewModel 
     {
         public ObservableCollection<ConnectionViewModel> Connections { get; } = new ObservableCollection<ConnectionViewModel>();
+        
+        // 테스트 용
+        public ObservableCollection<string> Lists { get; } = new ObservableCollection<string>();
         public ConnectionsViewModel()
         {
             Connections.Add(new ConnectionViewModel
@@ -67,6 +64,9 @@ namespace DAGlyn
                     Anchor = new Point(100, 100)
                 }
             });
+            
+            Lists.Add("item1");
+            Lists.Add("item2");
         }
         /*
         public static ObservableCollection<ConnectionViewModel> Setup()

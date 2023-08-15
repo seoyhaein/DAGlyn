@@ -5,24 +5,26 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		xmlns:controls="clr-namespace:DAGlyn"
         x:Class="DAGlyn.MainWindow"
-        x:DataType="controls:MainWindow"
+        x:DataType="controls:ConnectionsViewModel"
         x:CompileBindings="True"
         Title="DAGlyn">
-	<Grid>
-		<!--
+		<Window.DataContext>
+			<controls:ConnectionsViewModel/>
+		</Window.DataContext>
+		<Grid>
+			<!--
 		<controls:Node Width="100" Height="100"/>
 		-->
-		<!-- 아래 코드 일단 문제 있음. 일단 이대로 커밋 함.-->
-		<ItemsControl x:Name="Tester">
+			<ItemsControl x:Name="Tester" ItemsSource="{Binding Lists}">
 			<ItemsControl.ItemTemplate>
-				<DataTemplate x:DataType="controls:MainWindow">
+				<DataTemplate>
 					<Grid >
 						<Border IsVisible="False"
 						        x:Name="Highlight"/>
 						<StackPanel Orientation="Horizontal"
 						            Margin="5">
 							<Ellipse Width="14" Height="14" StrokeThickness="2" Fill="Blue" />
-							<ContentPresenter Content="{Binding}" />
+							<ContentPresenter  Content="{Binding}" />
 						</StackPanel>
 					</Grid>
 				</DataTemplate>
