@@ -24,7 +24,7 @@
                          Stroke="{TemplateBinding BorderBrush}"
                          Fill="Transparent"
                          StrokeThickness="2" />
-            </ControlTemplate>
+            </ControlTemplate >
         </Setter>
     </Style>
 </Styles>

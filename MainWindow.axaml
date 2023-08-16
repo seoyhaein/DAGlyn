@@ -8,27 +8,7 @@
         x:DataType="controls:ConnectionsViewModel"
         x:CompileBindings="True"
         Title="DAGlyn">
-		<Window.DataContext>
-			<controls:ConnectionsViewModel/>
-		</Window.DataContext>
-		<Grid>
-			<!--
-		<controls:Node Width="100" Height="100"/>
-		-->
-			<ItemsControl x:Name="Tester" ItemsSource="{Binding Lists}">
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<Grid >
-						<Border IsVisible="False"
-						        x:Name="Highlight"/>
-						<StackPanel Orientation="Horizontal"
-						            Margin="5">
-							<Ellipse Width="14" Height="14" StrokeThickness="2" Fill="Blue" />
-							<ContentPresenter  Content="{Binding}" />
-						</StackPanel>
-					</Grid>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-	</Grid>
+		<Canvas Name="Tester" Width="800" Height="400" Background="Yellow">
+			<controls:Connector Canvas.Left="100" Canvas.Top="20"/>
+		</Canvas>
 </Window>
