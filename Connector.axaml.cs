@@ -21,22 +21,21 @@ public class Connector : TemplatedControl
 
     public Connector()
     {
-            /*PendingConnectionStarted += OnPendingConnectionStarted;
-            PendingConnectionCompleted += OnPendingConnectionCompleted;
-            PendingConnectionDrag += OnPendingConnectionDrag;*/
-           
+        /*PendingConnectionStarted += OnPendingConnectionStarted;
+          PendingConnectionCompleted += OnPendingConnectionCompleted;
+          PendingConnectionDrag += OnPendingConnectionDrag;*/ 
     }
 
-        // TODO 이 부분은 추후 테스트를 진행햐야 한다.
-        // 안해줘도 될꺼 같은데 일단 해주었다.
-        /*public void Dispose()
-        {
-            /*PendingConnectionStarted -= OnPendingConnectionStarted;
-            PendingConnectionCompleted -= OnPendingConnectionCompleted;
-            PendingConnectionDrag -= OnPendingConnectionDrag;#1#
+    // TODO 이 부분은 추후 테스트를 진행햐야 한다.
+    // 안해줘도 될꺼 같은데 일단 해주었다.
+     /*public void Dispose()
+     {
+      /*PendingConnectionStarted -= OnPendingConnectionStarted;
+        PendingConnectionCompleted -= OnPendingConnectionCompleted;
+        PendingConnectionDrag -= OnPendingConnectionDrag;#1#
 
-            GC.SuppressFinalize(this);
-        }*/
+        GC.SuppressFinalize(this);
+     }*/
     #endregion
     
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
