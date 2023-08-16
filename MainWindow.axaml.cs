@@ -1,8 +1,12 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Controls.Shapes;
+using Avalonia.Media;
 
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using SkiaSharp;
 
 
 namespace DAGlyn
@@ -12,14 +16,30 @@ namespace DAGlyn
         public MainWindow()
         {
             InitializeComponent();
-            
+
             //CreatePendingConnection();
             //Tester.ItemsSource = Setup();
             //var connectionsViewModel = new ConnectionsViewModel();
             //DataContext = connectionsViewModel;
+            Loaded += OnLoaded;
         }
         
-        
+        private void OnLoaded(object? sender, RoutedEventArgs e)
+        {
+            Ellipse dot = new Ellipse
+            {
+                Width = 5,
+                Height = 5,
+                Fill = Brushes.Red
+            };
+
+            // 점의 위치를 Canvas에 설정
+            Canvas.SetLeft(dot, 150);
+            Canvas.SetTop(dot, 27);
+
+            // Canvas에 점 추가
+            Tester.Children.Add(dot);
+        }
 
         /*private void CreatePendingConnection()
         {
