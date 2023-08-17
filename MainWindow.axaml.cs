@@ -16,50 +16,7 @@ namespace DAGlyn
         public MainWindow()
         {
             InitializeComponent();
-
-            //CreatePendingConnection();
-            //Tester.ItemsSource = Setup();
-            //var connectionsViewModel = new ConnectionsViewModel();
-            //DataContext = connectionsViewModel;
-            Loaded += OnLoaded;
         }
-        
-        private void OnLoaded(object? sender, RoutedEventArgs e)
-        {
-            Ellipse dot = new Ellipse
-            {
-                Width = 5,
-                Height = 5,
-                Fill = Brushes.Red
-            };
-
-            // 점의 위치를 Canvas에 설정
-            Canvas.SetLeft(dot, 150);
-            Canvas.SetTop(dot, 27);
-
-            // Canvas에 점 추가
-            Tester.Children.Add(dot);
-        }
-
-        /*private void CreatePendingConnection()
-        {
-            Point sourceAnchor = new Point(10, 10);
-            Point targetAnchor = new Point(100, 100);
-            AvaloniaList<double>? strokeDashArray = null;
-            IBrush? stroke = Brushes.Black;
-            double strokeThickness = 2;
-            ConnectionDirection direction = ConnectionDirection.Forward;
-            IBrush? fill = Brushes.Black;
-
-            PendingConnection pendingConnection = new PendingConnection(sourceAnchor, targetAnchor, strokeDashArray, stroke, strokeThickness, direction, fill);
-
-            // Grid�� �߰�
-            var grid = this.FindControl<Grid>("grid");
-            grid.Children.Add(pendingConnection);
-
-            // ������ PendingConnection �ν��Ͻ��� ��Ʈ�� Ʈ���� �߰��ϰų� �ٸ� �۾��� �����մϴ�.
-            // ����: this.Content = pendingConnection;
-        }*/
     }
 
     public class ConnectionsViewModel 

@@ -8,9 +8,5 @@
         x:DataType="controls:ConnectionsViewModel"
         x:CompileBindings="True"
         Title="DAGlyn">
-		<Canvas x:Name="Tester" Width="800" Height="400" Background="Yellow">
-			<StackPanel x:Name="Container" Background="Green" Width="100" Height="200" Canvas.Left="100" Canvas.Top="20">
-				<controls:Connector />
-			</StackPanel>
-		</Canvas>
+		<Grid><controls:Connector/></Grid>
 </Window>

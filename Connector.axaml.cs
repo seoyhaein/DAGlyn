@@ -17,13 +17,45 @@ namespace DAGlyn;
 public delegate void PreviewLocationChanged(Point newLocation);
 public class Connector : TemplatedControl
 {
+     #region Routed Events
+      
+        public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionStartedEvent =
+            RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionStarted), RoutingStrategies.Bubble);
+        
+        public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionCompletedEvent =
+            RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionCompleted), RoutingStrategies.Bubble);
+
+        public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionDragEvent =
+            RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionDrag), RoutingStrategies.Bubble);
+
+        public event PendingConnectionEventHandler PendingConnectionStarted
+        {
+            add => AddHandler(PendingConnectionStartedEvent, value);
+            remove => RemoveHandler(PendingConnectionStartedEvent, value);
+        }
+
+        public event PendingConnectionEventHandler PendingConnectionCompleted
+        {
+            add => AddHandler(PendingConnectionCompletedEvent, value);
+            remove => RemoveHandler(PendingConnectionCompletedEvent, value);
+        }
+
+        public event PendingConnectionEventHandler PendingConnectionDrag
+        {
+            add => AddHandler(PendingConnectionDragEvent, value);
+            remove => RemoveHandler(PendingConnectionDragEvent, value);
+        }
+        
+    #endregion
+    
     #region Constructors and Dispose
 
     public Connector()
     {
-        /*PendingConnectionStarted += OnPendingConnectionStarted;
-          PendingConnectionCompleted += OnPendingConnectionCompleted;
-          PendingConnectionDrag += OnPendingConnectionDrag;*/ 
+        // 일단 테스트 용으로 여기서 작성하였다. 향후 삭제 예정
+        PendingConnectionStarted += OnPendingConnectionStarted;
+        PendingConnectionCompleted += OnPendingConnectionCompleted;
+        PendingConnectionDrag += OnPendingConnectionDrag; 
     }
 
     // TODO 이 부분은 추후 테스트를 진행햐야 한다.
@@ -42,16 +74,13 @@ public class Connector : TemplatedControl
     {
         base.OnApplyTemplate(e);
         Thumb = e.NameScope.Find<Ellipse>("PART_Connector");
-
-        Loaded += OnLoaded; 
     }
     
     #region Fields
 
     // TODO 추후 수정할 수 있음.       
     protected Control? Thumb { get; private set; }
-    //private Point _thumbCenter;
-
+    
     #endregion
 
     #region Dependency Properties
@@ -65,52 +94,99 @@ public class Connector : TemplatedControl
         set => SetValue(AnchorProperty, value);
     }
    #endregion
-        
-   // 이 메서드는 Canvas 안에서 Connector 를 가지고 있는 아이템의 위치값을 통해서 Connector 의 원의 위치를 찾기 위해서 만들어 졌다.
-   // 간단히 테스트 해볼려면 Canvas 안에 StackPanel 을 넣고 테스트를 한번 진행해보자.
-    public Point? UpdateAnchor(Control parent, Point parentLocation)
+   
+    protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
-        // Bounds.Size 는 RenderedSize 이다.
-        var w = parent.Width;
-        var renderedSize = parent.Bounds.Size;
-        var desiredSize = parent.DesiredSize;
-
-        if (Thumb?.Bounds.Size == null) return null;
-        var thumbSizeVector = new Vector(Thumb.Bounds.Size.Width, Thumb.Bounds.Size.Height);
-        var renderedSizeVector = new Vector(renderedSize.Width, renderedSize.Height);
-        var desiredSizeVector = new Vector(desiredSize.Width, desiredSize.Height);
-
-        var containerMargin = renderedSizeVector - desiredSizeVector;
-        var parentMargin = containerMargin / 2;
-        var halfThumbSize = thumbSizeVector / 2;
-        var newPoint = (Point)halfThumbSize - parentMargin;
-        var relativeLocation = Avalonia.VisualExtensions.TranslatePoint(Thumb, newPoint, parent);
-        
-        if (relativeLocation == null) return null;
-            
-        Anchor = new Point(parentLocation.X + relativeLocation.Value.X, parentLocation.Y + relativeLocation.Value.Y);
-
-        return Anchor;
-
-    }
-
-   // 테스트 용도로 만들어 짐. 부모인 StackPanel 를 찾음. 
-    public Control? FindParent()
-    {
-        //var parentOfType = Avalonia.VisualTree.VisualExtensions.FindAncestorOfType<Canvas>(this, false);
-        var parentOfType = this.FindAncestorOfType<StackPanel>();
-        if (parentOfType == null) return null;
-        return parentOfType;
-    }
-
-    private void OnLoaded(object? sender, RoutedEventArgs e)
-    {
-        var parent = FindParent();
-
-        if (parent != null)
+        base.OnPointerPressed(e);
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
         {
-            Point position = new Point(100, 20);
-            var site = UpdateAnchor(parent, position);
+            return;
         }
+
+        Focus();
+        e.Pointer.Capture(this);
+
+        if (this.Equals(e.Pointer.Captured))
+        {
+            PendingConnectionStartedRaiseEvent();
+            Debug.Print("OnPointerPressed");
+            e.Handled = true;
+        }
+    }
+
+    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    {
+        base.OnPointerReleased(e);
+        if ( this.Equals(e.Pointer.Captured) )
+        {
+            PendingConnectionCompletedRaiseEvent();
+            // capture 해제.
+            e.Pointer.Capture(null);
+            e.Handled = true;
+        }
+        Debug.Print("OnPointerReleased");
+    }
+
+    protected override void OnPointerMoved(PointerEventArgs e)
+    {
+        base.OnPointerMoved(e);
+        var currentPoint = e.GetPosition(this);
+        Debug.Print($"X:{currentPoint.X}");
+        Debug.Print($"Y:{currentPoint.Y}");
+        Debug.Print("OnPointerMoved");
+        PendingConnectionDragRaiseEvent();
+        e.Handled = true;
+    }
+    
+    // DataContext 는 살펴보자.
+    private void PendingConnectionStartedRaiseEvent()
+    {
+        var args = new PendingConnectionEventArgs(PendingConnectionStartedEvent,this, DataContext)
+        {
+            Anchor = Anchor,
+        };
+
+        RaiseEvent(args);
+    }
+
+    private void PendingConnectionDragRaiseEvent()
+    {
+        var args = new PendingConnectionEventArgs(PendingConnectionDragEvent, this, DataContext)
+        {
+            //OffsetX = offset.X,
+            //OffsetY = offset.Y,
+        };
+
+        RaiseEvent(args);
+    }
+
+    private void PendingConnectionCompletedRaiseEvent()
+    { 
+        // PendingConnectionEventArgs(DataContext) 관련해서 살펴봐야 함.
+        var args = new PendingConnectionEventArgs(PendingConnectionCompletedEvent, this, DataContext) 
+        { 
+            //Anchor = Anchor,
+        }; 
+        RaiseEvent(args);
+    }
+    
+    // 테스트용 핸들러들
+    private static void OnPendingConnectionStarted(object? sender, PendingConnectionEventArgs e)
+    {
+        Debug.Print("OnPendingConnectionStarted");
+    }
+
+    // 이벤트 핸들러 OnPendingConnectionDrag
+    private static void OnPendingConnectionDrag(object? sender, PendingConnectionEventArgs e)
+    {
+        Debug.Print("OnPendingConnectionDrag");
+           
+    }
+
+    // 이벤트 핸들러 OnPendingConnectionCompleted
+    private static void OnPendingConnectionCompleted(object? sender, PendingConnectionEventArgs e)
+    {
+        Debug.Print("OnPendingConnectionCompleted");
+            
     }
 }
