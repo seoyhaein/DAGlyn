@@ -17,34 +17,33 @@ namespace DAGlyn;
 public delegate void PreviewLocationChanged(Point newLocation);
 public class Connector : TemplatedControl
 {
-     #region Routed Events
-      
-        public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionStartedEvent =
-            RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionStarted), RoutingStrategies.Bubble);
+    #region Routed Events
+    public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionStartedEvent = 
+        RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionStarted), RoutingStrategies.Bubble);
         
-        public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionCompletedEvent =
-            RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionCompleted), RoutingStrategies.Bubble);
+    public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionCompletedEvent =
+        RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionCompleted), RoutingStrategies.Bubble);
 
-        public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionDragEvent =
-            RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionDrag), RoutingStrategies.Bubble);
+    public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionDragEvent =
+        RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionDrag), RoutingStrategies.Bubble);
 
-        public event PendingConnectionEventHandler PendingConnectionStarted
-        {
-            add => AddHandler(PendingConnectionStartedEvent, value);
-            remove => RemoveHandler(PendingConnectionStartedEvent, value);
-        }
+    public event PendingConnectionEventHandler PendingConnectionStarted
+    {
+        add => AddHandler(PendingConnectionStartedEvent, value);
+        remove => RemoveHandler(PendingConnectionStartedEvent, value);
+    }
 
-        public event PendingConnectionEventHandler PendingConnectionCompleted
-        {
-            add => AddHandler(PendingConnectionCompletedEvent, value);
-            remove => RemoveHandler(PendingConnectionCompletedEvent, value);
-        }
+    public event PendingConnectionEventHandler PendingConnectionCompleted
+    {
+        add => AddHandler(PendingConnectionCompletedEvent, value);
+        remove => RemoveHandler(PendingConnectionCompletedEvent, value);
+    }
 
-        public event PendingConnectionEventHandler PendingConnectionDrag
-        {
-            add => AddHandler(PendingConnectionDragEvent, value);
-            remove => RemoveHandler(PendingConnectionDragEvent, value);
-        }
+    public event PendingConnectionEventHandler PendingConnectionDrag
+    {
+        add => AddHandler(PendingConnectionDragEvent, value);
+        remove => RemoveHandler(PendingConnectionDragEvent, value);
+    }
         
     #endregion
     
