@@ -17,6 +17,8 @@ DAGlyn: Avalonia 기반의 고급 에디터로, 방향성 비순환 그래프(DA
 8/15/23 Node 에 들어가는 Connector 를 구현 시작.    
 ~~-- Anchor 의 위치값을 부모로 부터 가져오는 것을 작성해야 한다.~~  
 -- Node 를 저장할 수 있는 Container 를 만들어야 하고, 이 Container 는 위치값을 가져야 한다.  
+-- Container 를 독립적으로 만들지 생각해봐야 한다.  
+-- 일단 Canvas 에 넣어서 테스트 한번 진행하고, Connector 를 담을 수 있고, 위치 값을 가지는 Container 를 제작한다.  
 ~~8/16/23 Connector 에서 이벤트들을 구현한다. 이 이벤트를 통해서 부모에서 핸들러를 구현해서 사용할 수 있도록 한다.~~  
 
 

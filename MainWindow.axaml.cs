@@ -6,6 +6,7 @@ using Avalonia.Media;
 
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using SkiaSharp;
 
 
@@ -16,6 +17,21 @@ namespace DAGlyn
         public MainWindow()
         {
             InitializeComponent();
+        }
+        
+        private void OnPendingConnectionStarted(object? sender, PendingConnectionEventArgs e)
+        {
+            Debug.Print("OnPendingConnectionStarted");
+        }
+
+        private void OnPendingConnectionCompleted(object? sender, PendingConnectionEventArgs e)
+        {
+            Debug.Print("OnPendingConnectionCompleted");
+        }
+
+        private void OnPendingConnectionDrag(object? sender, PendingConnectionEventArgs e)
+        {
+            Debug.Print("OnPendingConnectionDrag");
         }
     }
 

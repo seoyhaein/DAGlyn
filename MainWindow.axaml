@@ -8,5 +8,10 @@
         x:DataType="controls:ConnectionsViewModel"
         x:CompileBindings="True"
         Title="DAGlyn">
-		<Grid><controls:Connector/></Grid>
+		<Grid>
+			  <controls:Connector 
+				          PendingConnectionStarted="OnPendingConnectionStarted"
+				          PendingConnectionCompleted="OnPendingConnectionCompleted"
+				          PendingConnectionDrag="OnPendingConnectionDrag"/>
+		</Grid>
 </Window>

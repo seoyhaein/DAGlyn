@@ -52,9 +52,15 @@ public class Connector : TemplatedControl
     public Connector()
     {
         // 일단 테스트 용으로 여기서 작성하였다. 향후 삭제 예정
-        PendingConnectionStarted += OnPendingConnectionStarted;
-        PendingConnectionCompleted += OnPendingConnectionCompleted;
-        PendingConnectionDrag += OnPendingConnectionDrag; 
+        //PendingConnectionStarted += OnPendingConnectionStarted;
+        //PendingConnectionCompleted += OnPendingConnectionCompleted;
+        //PendingConnectionDrag += OnPendingConnectionDrag; 
+    }
+
+    static Connector()
+    {
+        // 일단 초기값으로 focus를 가질 수 있도록 설정한다.
+        FocusableProperty.OverrideDefaultValue<Connector>(true);
     }
 
     // TODO 이 부분은 추후 테스트를 진행햐야 한다.
@@ -69,16 +75,11 @@ public class Connector : TemplatedControl
      }*/
     #endregion
     
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
-    {
-        base.OnApplyTemplate(e);
-        Thumb = e.NameScope.Find<Ellipse>("PART_Connector");
-    }
-    
     #region Fields
 
-    // TODO 추후 수정할 수 있음.       
-    protected Control? Thumb { get; private set; }
+    // Interactive 일단 바뀔 수 있음.
+    protected Interactive? Thumb { get; private set; }
+    private Point? _thumbCenter;
     
     #endregion
 
@@ -92,7 +93,31 @@ public class Connector : TemplatedControl
         get => GetValue(AnchorProperty);
         set => SetValue(AnchorProperty, value);
     }
+    
+    // Container 의 타입은 일단 추후에 바뀔 수 있음.
+    // Container 타입을 구체적으로 잡아야 할듯하다.
+    public static readonly StyledProperty<Control?> ContainerProperty =
+        AvaloniaProperty.Register<Connector, Control?>(nameof(Container), null);
+
+    public Control? Container
+    {
+        get => GetValue(ContainerProperty);
+        set => SetValue(ContainerProperty, value);
+    }
+    
    #endregion
+   
+   protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+   {
+       base.OnApplyTemplate(e);
+       Thumb = e.NameScope.Find<Ellipse>("PART_Connector");
+       
+       // TODO 실제 코드에서는 로그나 기타 다른 방식으로 처리하도록 하자.
+       if (Thumb == null)
+       {
+           throw new InvalidOperationException("Template is missing the required 'PART_Connector' element.");
+       }
+   }
    
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
@@ -107,6 +132,7 @@ public class Connector : TemplatedControl
 
         if (this.Equals(e.Pointer.Captured))
         {
+            //UpdateAnchor(Container);
             PendingConnectionStartedRaiseEvent();
             Debug.Print("OnPointerPressed");
             e.Handled = true;
@@ -118,6 +144,11 @@ public class Connector : TemplatedControl
         base.OnPointerReleased(e);
         if ( this.Equals(e.Pointer.Captured) )
         {
+            if (Thumb != null)
+            {
+                _thumbCenter = new Point(Thumb.Bounds.Width / 2, Thumb.Bounds.Height / 2);
+            }
+
             PendingConnectionCompletedRaiseEvent();
             // capture 해제.
             e.Pointer.Capture(null);
@@ -129,11 +160,12 @@ public class Connector : TemplatedControl
     protected override void OnPointerMoved(PointerEventArgs e)
     {
         base.OnPointerMoved(e);
-        var currentPoint = e.GetPosition(this);
-        Debug.Print($"X:{currentPoint.X}");
-        Debug.Print($"Y:{currentPoint.Y}");
-        Debug.Print("OnPointerMoved");
-        PendingConnectionDragRaiseEvent();
+       
+        if (_thumbCenter.HasValue)
+        {
+            Vector? offset = e.GetPosition(Thumb) - _thumbCenter.Value;
+            PendingConnectionDragRaiseEvent(offset);
+        }
         e.Handled = true;
     }
     
@@ -148,12 +180,14 @@ public class Connector : TemplatedControl
         RaiseEvent(args);
     }
 
-    private void PendingConnectionDragRaiseEvent()
+    private void PendingConnectionDragRaiseEvent(Vector? offset)
     {
+        if (offset == null) return;
+        
         var args = new PendingConnectionEventArgs(PendingConnectionDragEvent, this, DataContext)
         {
-            //OffsetX = offset.X,
-            //OffsetY = offset.Y,
+            OffsetX = offset.Value.X,
+            OffsetY = offset.Value.Y,
         };
 
         RaiseEvent(args);
@@ -168,24 +202,37 @@ public class Connector : TemplatedControl
         }; 
         RaiseEvent(args);
     }
+    // 여기서 currentLocation 은 Container 의 Location 이 된다.
+    protected void UpdateAnchor(Point currentLocation)
+    {
+        if (Container == null || Thumb == null) return;
+
+        Vector? ToVector(Size? size) => size.HasValue ? new Vector(size.Value.Width, size.Value.Height) : (Vector?)null;
+
+        var thumbVector = ToVector(Thumb.Bounds.Size);
+        var containerRenderedVector = ToVector(Container.Bounds.Size);
+        var containerDesiredVector = ToVector(Container.DesiredSize);
+
+        if (!thumbVector.HasValue || !containerRenderedVector.HasValue || !containerDesiredVector.HasValue) return;
+
+        var marginDifference = containerRenderedVector.Value - containerDesiredVector.Value;
+        var adjustedPoint = (Point)thumbVector.Value / 2 - marginDifference / 2;
+
+        var relativeLocation = Thumb.TranslatePoint(adjustedPoint, Container);
+        if (!relativeLocation.HasValue) return;
+
+        Anchor = new Point(currentLocation.X + relativeLocation.Value.X, currentLocation.Y + relativeLocation.Value.Y);
+    }
     
-    // 테스트용 핸들러들
-    private static void OnPendingConnectionStarted(object? sender, PendingConnectionEventArgs e)
+    // 테스트 용도로 만들어 짐.
+    public T? FindParent<T>(Visual control) where T : Visual
     {
-        Debug.Print("OnPendingConnectionStarted");
+        var parentOfType = this.FindAncestorOfType<T>();
+        return parentOfType;
     }
 
-    // 이벤트 핸들러 OnPendingConnectionDrag
-    private static void OnPendingConnectionDrag(object? sender, PendingConnectionEventArgs e)
+    private Vector? ConvertFrom(Size? size)
     {
-        Debug.Print("OnPendingConnectionDrag");
-           
-    }
-
-    // 이벤트 핸들러 OnPendingConnectionCompleted
-    private static void OnPendingConnectionCompleted(object? sender, PendingConnectionEventArgs e)
-    {
-        Debug.Print("OnPendingConnectionCompleted");
-            
+        return size.HasValue ? new Vector(size.Value.Width, size.Value.Height) : (Vector?)null;
     }
 }
