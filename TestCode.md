@@ -481,3 +481,29 @@ namespace DAGlyn
     }
 }
 ```
+
+```xaml
+<Grid>
+    <controls:Connector 
+        PendingConnectionStarted="OnPendingConnectionStarted"
+	    PendingConnectionCompleted="OnPendingConnectionCompleted"
+	    PendingConnectionDrag="OnPendingConnectionDrag"/>
+</Grid>
+```
+
+```csharp
+        private void OnPendingConnectionStarted(object? sender, PendingConnectionEventArgs e)
+        {
+            Debug.Print("OnPendingConnectionStarted");
+        }
+
+        private void OnPendingConnectionCompleted(object? sender, PendingConnectionEventArgs e)
+        {
+            Debug.Print("OnPendingConnectionCompleted");
+        }
+
+        private void OnPendingConnectionDrag(object? sender, PendingConnectionEventArgs e)
+        {
+            Debug.Print("OnPendingConnectionDrag");
+        }
+```

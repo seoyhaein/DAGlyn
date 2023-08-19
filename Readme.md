@@ -9,6 +9,18 @@ DAGlyn: Avalonia 기반의 고급 에디터로, 방향성 비순환 그래프(DA
 ~~8/14/23 Node 바인딩 문제  
 -- Connector 와 Connector 의 이름을 연결 시켜야 하는데, Compiled Binding 부분에서 잘 안됨. Binding 부분의 이해력 부족.  
 -- ItemsControl 의 ItemSource 에 넣은 Item 의 내용을 ItemTemplate 에서 정의 한 ContentPresenter 에 이름으로 바인딩 시켜야 한다.~~  
+8/19/23 ContentPresenter 바인딩이 안되는 문제가 발생했다.  
+```xaml
+<Canvas Width="800" Height="450" DataContext="{Binding Lists }">
+	<controls:ItemContainer Width="20" Height="50" Content="{Binding}" Canvas.Left="20" Canvas.Top="20">
+		<controls:ItemContainer.ContentTemplate>
+			<DataTemplate x:DataType="controls:ConnectionsViewModel">
+				<TextBlock Text="{Binding Lists}" Foreground="Red"/>
+			</DataTemplate>
+		</controls:ItemContainer.ContentTemplate>
+	</controls:ItemContainer>
+</Canvas>
+```
 
 ## 개발 진행 사항 
 8/13/23 Node 를 일차적으로 테스트용으로 개발 진행중   

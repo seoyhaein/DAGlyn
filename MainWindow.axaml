@@ -8,10 +8,14 @@
         x:DataType="controls:ConnectionsViewModel"
         x:CompileBindings="True"
         Title="DAGlyn">
-		<Grid>
-			  <controls:Connector 
-				          PendingConnectionStarted="OnPendingConnectionStarted"
-				          PendingConnectionCompleted="OnPendingConnectionCompleted"
-				          PendingConnectionDrag="OnPendingConnectionDrag"/>
-		</Grid>
+	
+	<Canvas Width="800" Height="450" DataContext="{Binding Lists }">
+		<controls:ItemContainer Width="20" Height="50" Content="{Binding}" Canvas.Left="20" Canvas.Top="20">
+			<controls:ItemContainer.ContentTemplate>
+				<DataTemplate x:DataType="controls:ConnectionsViewModel">
+					<TextBlock Text="{Binding Lists}" Foreground="Red"/>
+				</DataTemplate>
+			</controls:ItemContainer.ContentTemplate>
+		</controls:ItemContainer>
+	</Canvas>
 </Window>

@@ -8,5 +8,6 @@
         <FluentTheme />
         <StyleInclude Source="/Node.axaml" />
         <StyleInclude Source="/Connector.axaml"/>
+        <StyleInclude Source="/ItemContainer.axaml"/>
     </Application.Styles>
 </Application>
