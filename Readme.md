@@ -35,3 +35,5 @@ DAGlyn: Avalonia 기반의 고급 에디터로, 방향성 비순환 그래프(DA
 
 
 ![node 참고이미지 - 구현 후 삭제 예정](images/ref01.png)
+
+![node 초기 구상 이미지 - 구현 후 삭제 예정](images/init01.png)
