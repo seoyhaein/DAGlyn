@@ -8,14 +8,33 @@
         x:DataType="controls:ConnectionsViewModel"
         x:CompileBindings="True"
         Title="DAGlyn">
+	<Window.DataContext>
+		<controls:ConnectionsViewModel/>
+	</Window.DataContext>
 	
-	<Canvas Width="800" Height="450" DataContext="{Binding Lists }">
-		<controls:ItemContainer Width="20" Height="50" Content="{Binding}" Canvas.Left="20" Canvas.Top="20">
+	<Canvas Width="800" Height="450">
+		<!--<TextBlock Text="{Binding BindingText}" Foreground="Red"/> -->
+		<!--
+		<ContentControl Width="100" Height="100" Content = "{Binding }">
+			<ContentControl.ContentTemplate>
+				<DataTemplate DataType="controls:ConnectionsViewModel">
+					<Button Content = "{Binding BindingText}" Foreground="Red" />		
+					<controls:Connector Name="{Binding BindingText}" />
+				</DataTemplate>
+			</ContentControl.ContentTemplate>
+		</ContentControl>
+		-->
+		<!--
+		<controls:Connector Name="{Binding BindingText}" Canvas.Left="100" Canvas.Top="100" />
+		-->
+		
+		<controls:ItemContainer Width="100" Height="100" Content="{Binding }" Canvas.Left="20" Canvas.Top="20">
 			<controls:ItemContainer.ContentTemplate>
 				<DataTemplate x:DataType="controls:ConnectionsViewModel">
-					<TextBlock Text="{Binding Lists}" Foreground="Red"/>
+					<controls:Connector Name="{Binding BindingText}"/>
 				</DataTemplate>
 			</controls:ItemContainer.ContentTemplate>
 		</controls:ItemContainer>
+		
 	</Canvas>
 </Window>

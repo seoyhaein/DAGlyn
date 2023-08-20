@@ -26,6 +26,9 @@ namespace DAGlyn
         
         // 테스트 용
         public ObservableCollection<string> Lists { get; } = new ObservableCollection<string>();
+
+        public string BindingText { get; set; }
+
         public ConnectionsViewModel()
         {
             Connections.Add(new ConnectionViewModel
@@ -45,7 +48,10 @@ namespace DAGlyn
             
             Lists.Add("item1");
             Lists.Add("item2");
+
+            BindingText = "hello world";
         }
+        
         /*
         public static ObservableCollection<ConnectionViewModel> Setup()
         {

@@ -9,13 +9,16 @@ DAGlyn: Avalonia 기반의 고급 에디터로, 방향성 비순환 그래프(DA
 ~~8/14/23 Node 바인딩 문제  
 -- Connector 와 Connector 의 이름을 연결 시켜야 하는데, Compiled Binding 부분에서 잘 안됨. Binding 부분의 이해력 부족.  
 -- ItemsControl 의 ItemSource 에 넣은 Item 의 내용을 ItemTemplate 에서 정의 한 ContentPresenter 에 이름으로 바인딩 시켜야 한다.~~  
-8/19/23 ContentPresenter 바인딩이 안되는 문제가 발생했다.  
+~~8/19/23 ContentPresenter 바인딩이 안되는 문제가 발생했다.~~  
+~~8/20/23 바인딩 문제는 해결했는데, Visual Tree 를 검사를 하면 DataTemplate 이하가 렌더링 되지 않는 문제가 발생한다.~~  
+~~-- WPF 와 ContentPresenter 바인딩 하는 방식도 다르고, ContentPresenter 의 ContentTemplate 에 DataTemplate 을 적용하는 방식이 다른 것 같다.~~  
+
 ```xaml
 <Canvas Width="800" Height="450" DataContext="{Binding Lists }">
 	<controls:ItemContainer Width="20" Height="50" Content="{Binding}" Canvas.Left="20" Canvas.Top="20">
 		<controls:ItemContainer.ContentTemplate>
 			<DataTemplate x:DataType="controls:ConnectionsViewModel">
-				<TextBlock Text="{Binding Lists}" Foreground="Red"/>
+				<Button Content = "{Binding BindingText}" Foreground="Red" />
 			</DataTemplate>
 		</controls:ItemContainer.ContentTemplate>
 	</controls:ItemContainer>
@@ -30,7 +33,7 @@ DAGlyn: Avalonia 기반의 고급 에디터로, 방향성 비순환 그래프(DA
 ~~-- Anchor 의 위치값을 부모로 부터 가져오는 것을 작성해야 한다.~~  
 -- Node 를 저장할 수 있는 Container 를 만들어야 하고, 이 Container 는 위치값을 가져야 한다.  
 -- Container 를 독립적으로 만들지 생각해봐야 한다.  
--- 일단 Canvas 에 넣어서 테스트 한번 진행하고, Connector 를 담을 수 있고, 위치 값을 가지는 Container 를 제작한다.  
+~~-- 일단 Canvas 에 넣어서 테스트 한번 진행하고, Connector 를 담을 수 있고, 위치 값을 가지는 Container 를 제작한다.~~    
 ~~8/16/23 Connector 에서 이벤트들을 구현한다. 이 이벤트를 통해서 부모에서 핸들러를 구현해서 사용할 수 있도록 한다.~~  
 
 ## 디자인 참고 및 스케치

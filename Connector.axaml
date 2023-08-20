@@ -23,7 +23,13 @@
                          Height="{TemplateBinding Height}"
                          Stroke="{TemplateBinding BorderBrush}"
                          Fill="Transparent"
-                         StrokeThickness="2" />
+                         StrokeThickness="2" >
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{TemplateBinding Name}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </Ellipse>
             </ControlTemplate >
         </Setter>
     </Style>

@@ -27,7 +27,8 @@
                         Padding="{TemplateBinding Padding}"
                         x:Name="Border"
                         CornerRadius="3">
-                    <ContentPresenter />
+                    <ContentPresenter Content="{TemplateBinding Content}" 
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </Border>
             </ControlTemplate>
         </Setter>
