@@ -13,18 +13,6 @@ DAGlyn: Avalonia 기반의 고급 에디터로, 방향성 비순환 그래프(DA
 ~~8/20/23 바인딩 문제는 해결했는데, Visual Tree 를 검사를 하면 DataTemplate 이하가 렌더링 되지 않는 문제가 발생한다.~~  
 ~~-- WPF 와 ContentPresenter 바인딩 하는 방식도 다르고, ContentPresenter 의 ContentTemplate 에 DataTemplate 을 적용하는 방식이 다른 것 같다.~~  
 
-```xaml
-<Canvas Width="800" Height="450" DataContext="{Binding Lists }">
-	<controls:ItemContainer Width="20" Height="50" Content="{Binding}" Canvas.Left="20" Canvas.Top="20">
-		<controls:ItemContainer.ContentTemplate>
-			<DataTemplate x:DataType="controls:ConnectionsViewModel">
-				<Button Content = "{Binding BindingText}" Foreground="Red" />
-			</DataTemplate>
-		</controls:ItemContainer.ContentTemplate>
-	</controls:ItemContainer>
-</Canvas>
-```
-
 ## 개발 진행 사항 
 8/13/23 Node 를 일차적으로 테스트용으로 개발 진행중   
 -- UI 구현을 80% 이상 완성도로 완성한 후, Editor 로 넘어간다.
