@@ -12,7 +12,7 @@
 		<controls:ConnectionsViewModel/>
 	</Window.DataContext>
 	
-	<Canvas Width="800" Height="450">
+	<Canvas x:Name="MainCanvas" Width="800" Height="450">
 		<!--<TextBlock Text="{Binding BindingText}" Foreground="Red"/> -->
 		<!--
 		<ContentControl Width="100" Height="100" Content = "{Binding }">
@@ -28,13 +28,19 @@
 		<controls:Connector Name="{Binding BindingText}" Canvas.Left="100" Canvas.Top="100" />
 		-->
 		
-		<controls:ItemContainer Width="100" Height="100" Content="{Binding }" Canvas.Left="20" Canvas.Top="20">
+		<controls:ItemContainer x:Name="Start" Width="100" Height="100" Content="{Binding }" Location="20,20" Canvas.Left="20" Canvas.Top="20">
 			<controls:ItemContainer.ContentTemplate>
 				<DataTemplate x:DataType="controls:ConnectionsViewModel">
-					<controls:Connector Name="{Binding BindingText}"/>
+					<controls:Connector />
 				</DataTemplate>
 			</controls:ItemContainer.ContentTemplate>
 		</controls:ItemContainer>
-		
+		<controls:ItemContainer x:Name="End" Width="100" Height="100" Content="{Binding }" Location="200,200" Canvas.Left="200" Canvas.Top="200">
+			<controls:ItemContainer.ContentTemplate>
+				<DataTemplate x:DataType="controls:ConnectionsViewModel" >
+					<controls:Connector />
+				</DataTemplate>
+			</controls:ItemContainer.ContentTemplate>
+		</controls:ItemContainer>
 	</Canvas>
 </Window>
