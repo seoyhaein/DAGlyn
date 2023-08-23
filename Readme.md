@@ -26,12 +26,14 @@ DAGlyn: Avalonia 기반의 고급 에디터로, 방향성 비순환 그래프(DA
 ~~-- 어떻게 바인딩 시킬지 고민해야 한다. 좀 어렵다.~~  
 8/22/23 **Connector, ItemContainer, Connection 클래스가 각각 독립적으로 설계하고 싶다.** 계속 종속적으로 구현하게 되는데 이것도 어렵다.  
 8/22/23 Node 에 Connector 연결  
+-- InputConnector 추가, Connector 의 axaml 없애버리고, InputConnector 로 대체. 하지만 이러면 다양한 모습을 할 수 없다라는 단점이 생김.
 
 ## 개발 고려 사항
 1. 컨트롤들간에 데이터 송신 및 데이터 수신은 이벤트로 처리한다.  
 
 ## 향후 개발시 참고사항(그냥 기록용으로, 향후 삭제)
 1. Toolbar 같은 경우는 AvaloniaEdit 을 한번 참고해본다.  
+2. Connector 의 axaml 없애버리고, InputConnector 로 대체. 하지만 이러면 다양한 모습을 할 수 없다라는 단점이 생김. 이 문제를 향후 처리함.
 
 ## 디자인 참고 및 스케치
 

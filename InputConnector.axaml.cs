@@ -4,6 +4,6 @@ using Avalonia.Controls.Primitives;
 
 namespace DAGlyn;
 
-public class InputConnector : TemplatedControl
+public class InputConnector : Connector
 {
 }

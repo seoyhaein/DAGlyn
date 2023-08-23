@@ -6,7 +6,12 @@
     </Design.PreviewWith>
 
     <Style Selector="controls|Node">
-        <!-- Set Defaults -->
+        <Style.Resources>
+            <DataTemplate x:Key="DefaultInputConnectorTemplate">
+                <controls:InputConnector />
+            </DataTemplate>
+        </Style.Resources>
+            <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
                 <Border BorderBrush="Black"
@@ -37,11 +42,11 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--Data IN-->
-                                <!--
+                                
                                 <ItemsControl ItemsSource="{TemplateBinding Input}"
                                               ItemTemplate="{TemplateBinding InputConnectorTemplate}"
                                               Focusable="False" />
-                                -->
+                                
                                 <!--Content-->
                                 <Border Grid.Column="1" 
                                         Padding="16 0 16 0">
@@ -49,12 +54,12 @@
                                 </Border>
 
                                 <!--Data OUT-->
-                                <!--
+                                
                                 <ItemsControl ItemsSource="{TemplateBinding Output}"
                                               ItemTemplate="{TemplateBinding OutputConnectorTemplate}"
                                               Grid.Column="2"
                                               Focusable="False" />
-                                              -->
+                                              
                             </Grid>
 
                             <!--Footer-->
