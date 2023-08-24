@@ -17,7 +17,7 @@ public class InputConnector : Connector
         get => GetValue(HeaderProperty);
         set => SetValue(HeaderProperty, value);
     }
-    
+
     public static readonly StyledProperty<DataTemplate> HeaderTemplateProperty =
         AvaloniaProperty.Register<InputConnector, DataTemplate>(nameof(HeaderTemplate));
 

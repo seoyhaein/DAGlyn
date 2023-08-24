@@ -8,9 +8,9 @@ public interface ICanvasItem
 {
     // 이것만 구현하면됨. 아래 두개는 상속받는 클래스에서 이미 구현되어 있음.
     Point Location { get; }
-    
+
     Size DesiredSize { get; }
-    
+
     void Arrange(Rect rect);
 }
 
@@ -18,8 +18,8 @@ public interface ICanvasItem
 public class ItemContainer : ContentControl, ICanvasItem
 {
     #region Dependency Properties
-    
-    public static readonly StyledProperty<Point> LocationProperty = 
+
+    public static readonly StyledProperty<Point> LocationProperty =
         AvaloniaProperty.Register<ItemContainer, Point>(nameof(Location));
 
     public Point Location

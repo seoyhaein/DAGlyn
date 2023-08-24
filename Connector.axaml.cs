@@ -18,9 +18,9 @@ public delegate void PreviewLocationChanged(Point newLocation);
 public class Connector : TemplatedControl
 {
     #region Routed Events
-    public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionStartedEvent = 
+    public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionStartedEvent =
         RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionStarted), RoutingStrategies.Bubble);
-        
+
     public static readonly RoutedEvent<PendingConnectionEventArgs> PendingConnectionCompletedEvent =
         RoutedEvent.Register<Connector, PendingConnectionEventArgs>(nameof(PendingConnectionCompleted), RoutingStrategies.Bubble);
 
@@ -44,26 +44,26 @@ public class Connector : TemplatedControl
         add => AddHandler(PendingConnectionDragEvent, value);
         remove => RemoveHandler(PendingConnectionDragEvent, value);
     }
-        
+
     #endregion
-    
+
     #region Constructor
     static Connector()
     {
         // 일단 초기값으로 focus를 가질 수 있도록 설정한다.
         FocusableProperty.OverrideDefaultValue<Connector>(true);
     }
-    
+
     #endregion
-    
+
     #region Fields & Dependency Properties
 
     // Interactive 일단 바뀔 수 있음.
     protected Interactive? Thumb { get; private set; }
     private Point? _thumbCenter;
     public ItemContainer? Container { get; set; }
-    
-    public static readonly StyledProperty<Point> AnchorProperty = 
+
+    public static readonly StyledProperty<Point> AnchorProperty =
         AvaloniaProperty.Register<Connector, Point>(nameof(Anchor));
 
     public Point Anchor
@@ -72,39 +72,39 @@ public class Connector : TemplatedControl
         set => SetValue(AnchorProperty, value);
     }
     #endregion
-   
-   protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
-   {
-       base.OnApplyTemplate(e);
-       Thumb = e.NameScope.Find<Ellipse>("PART_Connector");
-       Container = this.FindAncestorOfType<ItemContainer>();
-       
-       // TODO 추후 로그로
-       if (Thumb == null)
-       {
-           throw new InvalidOperationException("Template is missing the required 'PART_Connector' element.");
-       }
-   }
-   
-   // 일단 참고용으로 넣어 둔다. 향후 삭제 예정
-   /*protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
-   {
-       base.OnAttachedToVisualTree(e);
-    
-       if (Container is string containerName)
-       {
-           var containerControl = this.FindAncestorOfType<Control>(containerName);
-           if (containerControl != null)
-           {
-               Container = containerControl;
-           }
-           else
-           {
-               throw new InvalidOperationException($"No control found with the name {containerName}.");
-           }
-       }
-   }*/
-   
+
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+        Thumb = e.NameScope.Find<Ellipse>("PART_Connector");
+        Container = this.FindAncestorOfType<ItemContainer>();
+
+        // TODO 추후 로그로
+        if (Thumb == null)
+        {
+            throw new InvalidOperationException("Template is missing the required 'PART_Connector' element.");
+        }
+    }
+
+    // 일단 참고용으로 넣어 둔다. 향후 삭제 예정
+    /*protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+
+        if (Container is string containerName)
+        {
+            var containerControl = this.FindAncestorOfType<Control>(containerName);
+            if (containerControl != null)
+            {
+                Container = containerControl;
+            }
+            else
+            {
+                throw new InvalidOperationException($"No control found with the name {containerName}.");
+            }
+        }
+    }*/
+
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         base.OnPointerPressed(e);
@@ -119,9 +119,9 @@ public class Connector : TemplatedControl
         if (this.Equals(e.Pointer.Captured))
         {
             // 일단 여기서 Anchor 업데이트. 땜방코드
-            if (Container == null) return; 
+            if (Container == null) return;
             var check = UpdateAnchor();
-            
+
             // TODO 추후 로그로
             if (!check) throw new InvalidOperationException("Failed to update the Anchor.");
             PendingConnectionStartedRaiseEvent();
@@ -133,7 +133,7 @@ public class Connector : TemplatedControl
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
     {
         base.OnPointerReleased(e);
-        if ( this.Equals(e.Pointer.Captured) )
+        if (this.Equals(e.Pointer.Captured))
         {
             if (Thumb != null)
             {
@@ -151,7 +151,7 @@ public class Connector : TemplatedControl
     protected override void OnPointerMoved(PointerEventArgs e)
     {
         base.OnPointerMoved(e);
-       
+
         if (_thumbCenter.HasValue)
         {
             Vector? offset = e.GetPosition(Thumb) - _thumbCenter.Value;
@@ -159,11 +159,11 @@ public class Connector : TemplatedControl
         }
         e.Handled = true;
     }
-    
+
     // DataContext 는 살펴보자.
     private void PendingConnectionStartedRaiseEvent()
     {
-        var args = new PendingConnectionEventArgs(PendingConnectionStartedEvent,this, DataContext)
+        var args = new PendingConnectionEventArgs(PendingConnectionStartedEvent, this, DataContext)
         {
             Anchor = Anchor,
         };
@@ -174,7 +174,7 @@ public class Connector : TemplatedControl
     private void PendingConnectionDragRaiseEvent(Vector? offset)
     {
         if (offset == null) return;
-        
+
         var args = new PendingConnectionEventArgs(PendingConnectionDragEvent, this, DataContext)
         {
             OffsetX = offset.Value.X,
@@ -185,18 +185,18 @@ public class Connector : TemplatedControl
     }
 
     private void PendingConnectionCompletedRaiseEvent()
-    { 
+    {
         // PendingConnectionEventArgs(DataContext) 관련해서 살펴봐야 함.
-        var args = new PendingConnectionEventArgs(PendingConnectionCompletedEvent, this, DataContext) 
-        { 
+        var args = new PendingConnectionEventArgs(PendingConnectionCompletedEvent, this, DataContext)
+        {
             //Anchor = Anchor,
-        }; 
+        };
         RaiseEvent(args);
     }
 
     private bool UpdateAnchor()
     {
-        if (Container == null || Thumb == null) return false; 
+        if (Container == null || Thumb == null) return false;
         // 인라인
         Vector? ToVector(Size? size) => size.HasValue ? new Vector(size.Value.Width, size.Value.Height) : (Vector?)null;
 
@@ -215,7 +215,7 @@ public class Connector : TemplatedControl
         Anchor = new Point(Container.Location.X + relativeLocation.Value.X, Container.Location.Y + relativeLocation.Value.Y);
         return true;
     }
-    
+
     // 테스트 용도로 만들어 짐.
     public T? FindParent<T>(Visual control) where T : Visual
     {
@@ -227,5 +227,5 @@ public class Connector : TemplatedControl
     {
         return size.HasValue ? new Vector(size.Value.Width, size.Value.Height) : (Vector?)null;
     }
-    
+
 }

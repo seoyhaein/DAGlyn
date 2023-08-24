@@ -109,7 +109,7 @@ namespace DAGlyn
             AvaloniaProperty.Register<Connection, double>(nameof(Spacing), 30);
 
         public static readonly StyledProperty<Size> ArrowSizeProperty =
-            AvaloniaProperty.Register<Connection, Size>(nameof(ArrowSize), defaultValue:BoxValue.ArrowSize);
+            AvaloniaProperty.Register<Connection, Size>(nameof(ArrowSize), defaultValue: BoxValue.ArrowSize);
 
         public Point Source
         {
@@ -171,15 +171,15 @@ namespace DAGlyn
         //TODO 다른 컨스트럭터도 필요할듯.
         static Connection()
         {
-           // 초기값 설정
+            // 초기값 설정
             StrokeThicknessProperty.OverrideDefaultValue<Connection>(3);
             StrokeProperty.OverrideDefaultValue<Connection>(Brushes.Black);
             FillProperty.OverrideDefaultValue<Connection>(Brushes.Black);
-            
+
             // TODO 8/12/23 
             // notion 에 일단 기록해두었지만, 향후 확장성을 생각했을때 어떻게 할지를 확인하고 결정해야 한다. TODO 로 남겨 놓는다.
             // SpacingProperty.OverrideDefaultValue<Connection>(30);
-            
+
             // 속성값이 변할때 마다 렌더링이 다시 될 수 있도록 하는 코드를 작성한다.
             // AffectsGeometry
             AffectsGeometry<Connection>(
