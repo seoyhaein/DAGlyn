@@ -1,6 +1,9 @@
 ﻿# DAGlyn
 DAGlyn: Avalonia 기반의 고급 에디터로, 방향성 비순환 그래프(DAG)를 활용해 데이터 흐름을 디자인하고 시각화합니다. 
-직관적인 노드 기반 GUI 상호작용에 최적화되어 효율적인 데이터 처리 워크플로우를 제공합니다.
+직관적인 노드 기반 GUI 상호작용에 최적화되어 효율적인 데이터 처리 워크플로우를 제공합니다.  
+
+DAGlyn: An advanced editor based on Avalonia, designed to visualize and design data flows using Directed Acyclic Graphs (DAG).   
+It's optimized for intuitive node-based GUI interactions, providing an efficient data processing workflow.  
 
 ## 현재 발생 문제점 및 개발 진행 사항
 ~~8/11/23 렌더링이 안되는 문제가 발생했다. WPF 에서는 Canvas 에서 잘 렌더링이 되었는데, Avalonia 에서의 Canvas 문제인지, 아니면 나의 코드가 문제인지 파악해야한다.~~  

@@ -18,6 +18,6 @@ public static class BoxValue
     public static readonly object Int0 = 0;
     public static readonly object Int1 = 1;
     public static readonly object UInt1 = 1u;
-
-    public static readonly object ArrowSize = new Size(7, 6);
+    // object 를 Size 로 고쳤음. 이후 테스트 해봐야 함.
+    public static readonly Size ArrowSize = new Size(7, 6);
 }

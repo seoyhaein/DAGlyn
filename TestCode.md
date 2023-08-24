@@ -573,3 +573,167 @@ internal sealed class ObserveAddRemoveCollection<T> : Collection<T>
         }
     }
 ```
+
+### 5. Connector 테스트 코드
+
+```xaml
+<Canvas x:Name="MainCanvas" Width="800" Height="450">
+		<!--<TextBlock Text="{Binding BindingText}" Foreground="Red"/> -->
+		<!--
+		<ContentControl Width="100" Height="100" Content = "{Binding }">
+			<ContentControl.ContentTemplate>
+				<DataTemplate DataType="controls:ConnectionsViewModel">
+					<Button Content = "{Binding BindingText}" Foreground="Red" />		
+					<controls:Connector Name="{Binding BindingText}" />
+				</DataTemplate>
+			</ContentControl.ContentTemplate>
+		</ContentControl>
+		-->
+		<!--
+		<controls:Connector Name="{Binding BindingText}" Canvas.Left="100" Canvas.Top="100" />
+		-->
+		
+		<controls:ItemContainer x:Name="Start" Width="100" Height="100" Content="{Binding }" Location="20,20" Canvas.Left="20" Canvas.Top="20">
+			<controls:ItemContainer.ContentTemplate>
+				<DataTemplate x:DataType="controls:ConnectionsViewModel">
+					<controls:Connector />
+				</DataTemplate>
+			</controls:ItemContainer.ContentTemplate>
+		</controls:ItemContainer>
+		<controls:ItemContainer x:Name="End" Width="100" Height="100" Content="{Binding }" Location="200,200" Canvas.Left="200" Canvas.Top="200">
+			<controls:ItemContainer.ContentTemplate>
+				<DataTemplate x:DataType="controls:ConnectionsViewModel" >
+					<controls:Connector />
+				</DataTemplate>
+			</controls:ItemContainer.ContentTemplate>
+		</controls:ItemContainer>
+	</Canvas>
+```
+
+```csharp
+public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            
+            AddHandler(Connector.PendingConnectionStartedEvent, new PendingConnectionEventHandler(OnPendingConnectionStarted));
+        }
+        
+        private void OnPendingConnectionStarted(object? sender, PendingConnectionEventArgs e)
+        {
+            var connection = new Connection();
+
+            connection.Source = e.Anchor;
+            connection.Target = new Point(400, 400);
+            this.MainCanvas.Children.Add(connection);
+            Debug.Print("OnPendingConnectionStarted");
+        }
+    }
+
+    public class ConnectionsViewModel 
+    {
+        public ObservableCollection<ConnectionViewModel> Connections { get; } = new ObservableCollection<ConnectionViewModel>();
+        
+        // 테스트 용
+        public ObservableCollection<string> Lists { get; } = new ObservableCollection<string>();
+
+        public string BindingText { get; set; }
+
+        public ConnectionsViewModel()
+        {
+            Connections.Add(new ConnectionViewModel
+            {
+                Source = new ConnectorViewModel
+                {
+                    Title = "Start",
+                    Anchor = new Point(10, 10)
+                },
+
+                Target = new ConnectorViewModel
+                {
+                    Title = "End",
+                    Anchor = new Point(100, 100)
+                }
+            });
+            
+            Lists.Add("item1");
+            Lists.Add("item2");
+
+            BindingText = "hello world";
+        }
+        
+        /*
+        public static ObservableCollection<ConnectionViewModel> Setup()
+        {
+            ObservableCollection<ConnectionViewModel> Connections = new ObservableCollection<ConnectionViewModel>
+            {
+                new ConnectionViewModel
+                {
+                    Source = new ConnectorViewModel
+                    {
+                        Title = "Start",
+                        Anchor = new Point(10, 10)
+                    },
+
+                    Target = new ConnectorViewModel
+                    {
+                        Title = "End",
+                        Anchor = new Point(100, 100)
+                    }
+                }
+            };
+
+            return Connections;
+        }
+        */
+    }
+
+    public class ConnectionViewModel
+    {
+        public ConnectorViewModel Source { get; set; }
+        public ConnectorViewModel Target { get; set; }
+
+        public ConnectionViewModel()
+        {
+            Source = new ConnectorViewModel();
+            Target = new ConnectorViewModel();
+        }
+    }
+
+    public class ConnectorViewModel : INotifyPropertyChanged
+    {
+        private Point _anchor;
+        public Point Anchor
+        {
+            set
+            {
+                _anchor = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Anchor)));
+            }
+            get => _anchor;
+        }
+
+        public string? Title { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+    }
+```
+
+### 6. 툴팁
+
+```xaml
+<Ellipse x:Name="PART_Connector"
+                                 Width="{TemplateBinding Width}"
+                                 Height="{TemplateBinding Height}"
+                                 Stroke="{TemplateBinding BorderBrush}"
+                                 Fill="Transparent"
+                                 StrokeThickness="2" >
+                            <!-- 이거 일단 수정해야 함.-->
+                            <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{TemplateBinding Name}" />
+                            </StackPanel>
+                         </ToolTip.Tip>
+                         </Ellipse>
+```

@@ -17,18 +17,6 @@ namespace DAGlyn
         public MainWindow()
         {
             InitializeComponent();
-            
-            AddHandler(Connector.PendingConnectionStartedEvent, new PendingConnectionEventHandler(OnPendingConnectionStarted));
-        }
-        
-        private void OnPendingConnectionStarted(object? sender, PendingConnectionEventArgs e)
-        {
-            var connection = new Connection();
-
-            connection.Source = e.Anchor;
-            connection.Target = new Point(400, 400);
-            this.MainCanvas.Children.Add(connection);
-            Debug.Print("OnPendingConnectionStarted");
         }
     }
 

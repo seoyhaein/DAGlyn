@@ -34,19 +34,15 @@
                     <StackPanel Orientation="Horizontal"
                                 Margin="{TemplateBinding Padding}">
                         <!--Connector 모양을 원으로 일단 고정시켜놓음. 향후 여러 모양으로 적용할지 생각해야함.-->
+                        <!-- ContentControl 로 교체하는 것도 생각해본다 -->
                         <Ellipse x:Name="PART_Connector"
                                  Width="{TemplateBinding Width}"
                                  Height="{TemplateBinding Height}"
                                  Stroke="{TemplateBinding BorderBrush}"
                                  Fill="Transparent"
-                                 StrokeThickness="2" >
-                            <!-- 이거 일단 수정해야 함.-->
-                            <ToolTip.Tip>
-                            <StackPanel>
-                                <TextBlock Text="{TemplateBinding Name}" />
-                            </StackPanel>
-                         </ToolTip.Tip>
-                         </Ellipse>
+                                 StrokeThickness="2" />
+                        <ContentPresenter Content="{TemplateBinding Header}" 
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}" />
                     </StackPanel>
                 </Grid>
             </ControlTemplate>

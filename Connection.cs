@@ -109,7 +109,7 @@ namespace DAGlyn
             AvaloniaProperty.Register<Connection, double>(nameof(Spacing), 30);
 
         public static readonly StyledProperty<Size> ArrowSizeProperty =
-            AvaloniaProperty.Register<Connection, Size>(nameof(ArrowSize), new Size(7, 6));
+            AvaloniaProperty.Register<Connection, Size>(nameof(ArrowSize), defaultValue:BoxValue.ArrowSize);
 
         public Point Source
         {
