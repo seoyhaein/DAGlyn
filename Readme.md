@@ -42,6 +42,7 @@ It's optimized for intuitive node-based GUI interactions, providing an efficient
 3. AvaloniaEdit Utils 에서 ExtensionMethods 일부와 FileReader 를 가지고 왔다. 향후 수정해서 사용한다.   
 4. InputConnectorPanel 삭제 예정.  
 5. Connector 추가/삭제는 Header 설정 창에서 설정.  
+6. Connector 자체가 없어도 된다는 생각도 하고 있다. 하지만 그것은 추후 업데이트 하자.  
 
 ## 디자인 참고 및 스케치
 
