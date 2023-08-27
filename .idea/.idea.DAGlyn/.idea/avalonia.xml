@@ -6,6 +6,7 @@
         <entry key="App.axaml" value="DAGlyn.csproj" />
         <entry key="Connector.axaml" value="DAGlyn.csproj" />
         <entry key="InputConnector.axaml" value="DAGlyn.csproj" />
+        <entry key="InputConnectorPanel.axaml" value="DAGlyn.csproj" />
         <entry key="ItemContainer.axaml" value="DAGlyn.csproj" />
         <entry key="MainWindow.axaml" value="DAGlyn.csproj" />
         <entry key="Node.axaml" value="DAGlyn.csproj" />

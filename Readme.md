@@ -15,9 +15,10 @@ It's optimized for intuitive node-based GUI interactions, providing an efficient
 ~~8/19/23 ContentPresenter 바인딩이 안되는 문제가 발생했다.~~  
 ~~8/20/23 바인딩 문제는 해결했는데, Visual Tree 를 검사를 하면 DataTemplate 이하가 렌더링 되지 않는 문제가 발생한다.~~  
 ~~-- WPF 와 ContentPresenter 바인딩 하는 방식도 다르고, ContentPresenter 의 ContentTemplate 에 DataTemplate 을 적용하는 방식이 다른 것 같다.~~  
+~~8/25/23 Connector 가 생기지 않는 문제 발생. xaml 구조의 문제인거 같다. 이거 원인을 파악하고 해결해야 한다.~~    
 
-8/13/23 Node 를 일차적으로 테스트용으로 개발 진행중   
--- UI 형태만 만들고, Editor 로 넘어간 후, Editor 완성 후 디자인적으로 신경쓴다.   
+~~8/13/23 Node 를 일차적으로 테스트용으로 개발 진행중~~     
+~~-- UI 형태만 만들고, Editor 로 넘어간 후, Editor 완성 후 디자인적으로 신경쓴다.~~   
 ~~8/15/23 Node 에 들어가는 Connector 를 구현 시작.~~      
 ~~-- Anchor 의 위치값을 부모로 부터 가져오는 것을 작성해야 한다.~~  
 ~~-- Node 를 저장할 수 있는 Container 를 만들어야 하고, 이 Container 는 위치값을 가져야 한다.~~    
@@ -28,8 +29,9 @@ It's optimized for intuitive node-based GUI interactions, providing an efficient
 ~~-- 서로 다른 좌표 영역에서 연결시켜야 하고, Connector 와 ItemContainer 는 **Connection 을 담을 수 있는 클래스가 아니다**.~~  
 ~~-- 어떻게 바인딩 시킬지 고민해야 한다. 좀 어렵다.~~  
 8/22/23 **Connector, ItemContainer, Connection 클래스가 각각 독립적으로 설계하고 싶다.** 계속 종속적으로 구현하게 되는데 이것도 어렵다.  
-8/22/23 Node 에 Connector 연결  
--- InputConnector 추가, Connector 의 axaml 없애버리고, InputConnector 로 대체. 하지만 이러면 다양한 모습을 할 수 없다라는 단점이 생김.
+~~8/22/23 Node 에 Connector 연결~~  
+~~-- InputConnector 추가, Connector 의 axaml 없애버리고, InputConnector 로 대체. 하지만~~ **이러면 다양한 모습을 할 수 없다라는 단점이 생김.**
+8/28/23 초기 Editor 구현
 
 ## 개발 고려 사항
 1. 컨트롤들간에 데이터 송신 및 데이터 수신은 이벤트로 처리한다.  
@@ -38,9 +40,12 @@ It's optimized for intuitive node-based GUI interactions, providing an efficient
 1. Toolbar 같은 경우는 AvaloniaEdit 을 한번 참고해본다.    
 2. Connector 의 axaml 없애버리고, InputConnector 로 대체. 하지만 이러면 다양한 모습을 할 수 없다라는 단점이 생김. 이 문제를 향후 처리함.  
 3. AvaloniaEdit Utils 에서 ExtensionMethods 일부와 FileReader 를 가지고 왔다. 향후 수정해서 사용한다.   
+4. InputConnectorPanel 삭제 예정.  
+5. Connector 추가/삭제는 Header 설정 창에서 설정.  
 
 ## 디자인 참고 및 스케치
 
 ![node 참고이미지 - 구현 후 삭제 예정](images/ref01.png)
 
+Footer 에 컨테이너 환경도 넣어야 할듯.
 ![node 초기 구상 이미지 - 구현 후 삭제 예정](images/init01.png)

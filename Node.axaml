@@ -1,15 +1,26 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:DAGlyn">
+        xmlns:controls="using:DAGlyn"
+        x:CompileBindings="True">
     <Design.PreviewWith>
         <controls:Node />
     </Design.PreviewWith>
 
     <Style Selector="controls|Node">
+        <!-- 향후 삭제하는 방향으로 생각하자. -->
         <Style.Resources>
-            <DataTemplate x:Key="DefaultInputConnectorTemplate">
+                <DataTemplate x:Key="DefaultInputConnectorTemplate">
                 <controls:InputConnector />
             </DataTemplate>
+                
+                <LinearGradientBrush x:Key="FadeOpacityMask"
+                                     StartPoint="0,0"
+                                     EndPoint="1,0">
+                                <GradientStop Color="#22FFFFFF" Offset="0" />
+                                <GradientStop Color="#88FFFFFF" Offset="0.3" />
+                                <GradientStop Color="#88FFFFFF" Offset="0.7" />
+                                <GradientStop Color="#22FFFFFF" Offset="1" />
+                </LinearGradientBrush>
         </Style.Resources>
         <Setter Property="Background"
                 Value="#662D2D30"/>
@@ -59,6 +70,7 @@
                             <Border
                                     BorderBrush="{TemplateBinding HeaderBrush}"
                                     CornerRadius="3 3 0 0"
+                                    BorderThickness="1"
                                     Grid.ColumnSpan="3"
                                     Padding="6 4 6 4">
                                 <ContentPresenter Content="{TemplateBinding Header}" 
@@ -74,10 +86,31 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--Data IN-->
-                                
+                                <!--
                                 <ItemsControl ItemsSource="{TemplateBinding Input}"
                                               ItemTemplate="{TemplateBinding InputConnectorTemplate}"
                                               Focusable="False" />
+                                -->
+                                
+                                <ItemsControl ItemsSource="{TemplateBinding Input}"
+                                              Focusable="False" >
+                                        <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                        <Grid >
+                                                                <Border IsVisible="True"
+                                                                        OpacityMask="{StaticResource FadeOpacityMask}"
+                                                                        Background="{TemplateBinding BorderBrush}"
+                                                                        BorderThickness="1"
+                                                                        BorderBrush="Red"/>
+                                                                <StackPanel Orientation="Horizontal"
+                                                                            Margin="4 2">
+                                                                        <controls:InputConnector />
+                                                                </StackPanel>
+                                                        </Grid>
+                                                </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                            
+                                </ItemsControl>
                                 
                                 <!--Content-->
                                 <Border Grid.Column="1" 
@@ -89,10 +122,24 @@
 
                                 <!--Data OUT-->
                                 <!-- HorizontalContentAlignment="Right" 없음. -->
+                                <!-- Border  x:Name="PART_Highlight" 삭제. -->
                                 <ItemsControl ItemsSource="{TemplateBinding Output}"
-                                              ItemTemplate="{TemplateBinding OutputConnectorTemplate}"
                                               Grid.Column="2"
-                                              Focusable="False" />
+                                              Focusable="False" >
+                                        <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                        <Grid>
+                                                                <Border IsVisible="True"
+                                                                        BorderThickness="1"
+                                                                        BorderBrush="Red"/>
+                                                                <StackPanel Orientation="Horizontal" 
+                                                                            Margin="4 2">
+                                                                        <controls:OutputConnector />
+                                                                </StackPanel>
+                                                        </Grid>
+                                                </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                                               
                             </Grid>
                             <!--디자인에 대해서는 추후 수정한다.-->                
@@ -101,6 +148,7 @@
                                     CornerRadius="0 0 3 3"
                                     Grid.Row="2"
                                     Grid.ColumnSpan="3"
+                                    BorderThickness="1"
                                     Padding="6 4 6 4">
                                 <ContentPresenter Content="{TemplateBinding Footer}" 
                                                   ContentTemplate="{TemplateBinding FooterTemplate}" />

@@ -5,6 +5,7 @@ using Avalonia.Controls.Shapes;
 using Avalonia.VisualTree;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml.Templates;
 
 // IDisposable 때문에 넣었지만 이건 테스트 해서 살펴봐야 할듯하다. 
 // 일단 주석처리 해두었다.
@@ -50,7 +51,6 @@ public class Connector : TemplatedControl
     #region Constructor
     static Connector()
     {
-        // 일단 초기값으로 focus를 가질 수 있도록 설정한다.
         FocusableProperty.OverrideDefaultValue<Connector>(true);
     }
 
@@ -71,18 +71,36 @@ public class Connector : TemplatedControl
         get => GetValue(AnchorProperty);
         set => SetValue(AnchorProperty, value);
     }
+    
+    public static readonly StyledProperty<object> HeaderProperty =
+        AvaloniaProperty.Register<InputConnector, object>(nameof(Header));
+
+    public object Header
+    {
+        get => GetValue(HeaderProperty);
+        set => SetValue(HeaderProperty, value);
+    }
+
+    public static readonly StyledProperty<DataTemplate> HeaderTemplateProperty =
+        AvaloniaProperty.Register<InputConnector, DataTemplate>(nameof(HeaderTemplate));
+
+    public DataTemplate HeaderTemplate
+    {
+        get => GetValue(HeaderTemplateProperty);
+        set => SetValue(HeaderTemplateProperty, value);
+    }
     #endregion
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        Thumb = e.NameScope.Find<Ellipse>("PART_Connector");
+        Thumb = e.NameScope.Find<Ellipse>("PART_CONNECTOR");
         Container = this.FindAncestorOfType<ItemContainer>();
 
         // TODO 추후 로그로
         if (Thumb == null)
         {
-            throw new InvalidOperationException("Template is missing the required 'PART_Connector' element.");
+            throw new InvalidOperationException("Template is missing the required 'PART_CONNECTOR' element.");
         }
     }
 
@@ -161,7 +179,7 @@ public class Connector : TemplatedControl
     }
 
     // DataContext 는 살펴보자.
-    private void PendingConnectionStartedRaiseEvent()
+    protected virtual void PendingConnectionStartedRaiseEvent()
     {
         var args = new PendingConnectionEventArgs(PendingConnectionStartedEvent, this, DataContext)
         {
@@ -170,8 +188,9 @@ public class Connector : TemplatedControl
 
         RaiseEvent(args);
     }
-
-    private void PendingConnectionDragRaiseEvent(Vector? offset)
+    
+    // 빈공란으로 향후 남겨두자.
+    protected virtual void PendingConnectionDragRaiseEvent(Vector? offset)
     {
         if (offset == null) return;
 
@@ -184,7 +203,7 @@ public class Connector : TemplatedControl
         RaiseEvent(args);
     }
 
-    private void PendingConnectionCompletedRaiseEvent()
+    protected virtual void PendingConnectionCompletedRaiseEvent()
     {
         // PendingConnectionEventArgs(DataContext) 관련해서 살펴봐야 함.
         var args = new PendingConnectionEventArgs(PendingConnectionCompletedEvent, this, DataContext)

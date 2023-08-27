@@ -1,6 +1,6 @@
 namespace DAGlyn;
 
-public class DAGNodeEditor
+public class DagNodeEditor : NodeEditor
 {
     
 }

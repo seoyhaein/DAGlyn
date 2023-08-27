@@ -18,18 +18,16 @@
                 Value="14" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Ellipse Name="PART_Connector"
+                <Grid>
+                    <Ellipse x:Name="PART_CONNECTOR"
                          Width="{TemplateBinding Width}"
                          Height="{TemplateBinding Height}"
                          Stroke="{TemplateBinding BorderBrush}"
                          Fill="Transparent"
-                         StrokeThickness="2" >
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{TemplateBinding Name}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Ellipse>
+                         StrokeThickness="2" />
+                    <ContentPresenter Content="{TemplateBinding Header}" 
+                                  ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                </Grid>
             </ControlTemplate >
         </Setter>
     </Style>

@@ -33,7 +33,6 @@ public class ItemContainer : ContentControl, ICanvasItem
 
     static ItemContainer()
     {
-        // 일단 초기값으로 focus를 가질 수 있도록 설정한다.
         FocusableProperty.OverrideDefaultValue<ItemContainer>(true);
     }
 

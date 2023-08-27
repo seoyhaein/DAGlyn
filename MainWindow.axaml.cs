@@ -18,6 +18,12 @@ namespace DAGlyn
         {
             InitializeComponent();
         }
+        
+        // contstructor 에 AddHandler 넣어도 됨.
+        private void OnPendingConnectionStarted(object? sender, PendingConnectionEventArgs e)
+        {
+            Debug.Print("InputConnector OnPendingConnectionStarted");
+        }
     }
 
     public class ConnectionsViewModel

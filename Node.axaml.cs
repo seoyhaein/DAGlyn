@@ -4,6 +4,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Markup.Xaml.Templates;
 
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Avalonia.Layout;
 
@@ -108,17 +109,17 @@ public class Node : TemplatedControl
         get => GetValue(InputConnectorTemplateProperty);
         set => SetValue(InputConnectorTemplateProperty, value);
     }
-
+    // TODO 여기에서 테스트 용으로 default 값을 넣었지만, 향후 삭제할 예정임.
     public static readonly StyledProperty<IEnumerable> InputProperty =
-        AvaloniaProperty.Register<Node, IEnumerable>(nameof(Input));
+        AvaloniaProperty.Register<Node, IEnumerable>(nameof(Input), defaultValue: new List<string>{ "DefaultItem" });
     public IEnumerable Input
     {
         get => GetValue(InputProperty);
         set => SetValue(InputProperty, value);
     }
-
+    // TODO 여기에서 테스트 용으로 default 값을 넣었지만, 향후 삭제할 예정임.
     public static readonly StyledProperty<IEnumerable> OutputProperty =
-        AvaloniaProperty.Register<Node, IEnumerable>(nameof(Output));
+        AvaloniaProperty.Register<Node, IEnumerable>(nameof(Output), defaultValue: new List<string>{ "DefaultItem" });
     public IEnumerable Output
     {
         get => GetValue(OutputProperty);

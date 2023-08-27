@@ -11,8 +11,51 @@
 	<Window.DataContext>
 		<controls:ConnectionsViewModel/>
 	</Window.DataContext>
-	
+	<!--
 	<Canvas>
-		<controls:Node Canvas.Left="20" Canvas.Top="20"/>
+		<controls:Node Canvas.Left="20" Canvas.Top="20" Width="200" Height="50"/>
 	</Canvas>
+-->
+	<!--주석처리 한것과 아래 코드의 VisualTree 를 비교해보자.-->
+	<StackPanel>
+		<!--<Button Content="hello" Width="100" Height="100"/>-->
+		<!--<controls:MyButton  Width="100" Height="100"/> -->
+		<!-- AvaloniaEdit CompletionListBox 11 버전 에서 찾아봐야 함.  -->
+		<controls:Node/>
+		<!--
+		<Grid.Resources>
+			<DataTemplate x:DataType="controls:ConnectionsViewModel" x:Key="DefaultInputConnectorTemplate">
+				<controls:InputConnector Header="{Binding}" />
+			</DataTemplate>	
+		</Grid.Resources>
+			
+			<ItemsControl ItemsSource="{Binding Lists}"
+			              ItemTemplate="{StaticResource DefaultInputConnectorTemplate}"
+			              Focusable="False" />
+			-->             
+			<!--
+			<ItemsControl ItemsSource="{Binding Lists}"
+			              Focusable="False" >
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+					<Grid>
+						<Border IsVisible="True" 
+						        x:Name="Highlight"/>
+						<StackPanel Orientation="Horizontal">
+							<Ellipse x:Name="PART_Connector"
+							         Width="14"
+							         Height="14"
+							         Stroke="Blue"
+							         Fill="Transparent"
+							         StrokeThickness="2" />
+							
+                        <ContentPresenter Content="{Binding }" />
+                                          
+						</StackPanel>
+					</Grid>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			    -->     
+	</StackPanel>
 </Window>
