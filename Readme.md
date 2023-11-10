@@ -42,6 +42,9 @@ It's optimized for intuitive node-based GUI interactions, providing an efficient
 ```
 이 문제 같은 경우는 pending 할때는 그냥 실선으로 중앙에서 나와서 중앙으로 연결 시키는 형태로 해도 될듯하다. 
 그리고 연결이 완료 된 이후에는 connector 가 생겨서 쌓이는 형태로 가져가면 될듯하다.
+
+즉, connector 로 연결 시키는 것이 아니라 부분에서 마우스 입력 받아서 처리하는 형태로 가 면될듯하다.
+부분이라는 의미는 노드에서 한쪽 면을 차지하는 컨트롤로 이해하면 될듯하다.
 ```
 ## 개발 고려 사항
 1. 컨트롤들간에 데이터 송신 및 데이터 수신은 이벤트로 처리한다.  
