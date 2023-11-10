@@ -1,6 +1,6 @@
 namespace DAGlyn;
 
-public class NodeEditor
+public class EditorCanvas
 {
     
 }
