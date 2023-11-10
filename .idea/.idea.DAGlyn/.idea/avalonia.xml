@@ -10,6 +10,7 @@
         <entry key="ItemContainer.axaml" value="DAGlyn.csproj" />
         <entry key="MainWindow.axaml" value="DAGlyn.csproj" />
         <entry key="Node.axaml" value="DAGlyn.csproj" />
+        <entry key="NodeEditor.axaml" value="DAGlyn.csproj" />
       </map>
     </option>
   </component>

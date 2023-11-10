@@ -17,6 +17,7 @@ namespace DAGlyn
         public MainWindow()
         {
             InitializeComponent();
+            
         }
         
         // contstructor 에 AddHandler 넣어도 됨.

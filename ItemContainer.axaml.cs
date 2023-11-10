@@ -15,8 +15,10 @@ public interface ICanvasItem
 }
 
 // 일단 테스트 용도로 간단하게 작성한다.
+// ListBoxItem 참고한다.
 public class ItemContainer : ContentControl, ICanvasItem
 {
+    
     #region Dependency Properties
 
     public static readonly StyledProperty<Point> LocationProperty =

@@ -31,7 +31,8 @@ It's optimized for intuitive node-based GUI interactions, providing an efficient
 8/22/23 **Connector, ItemContainer, Connection 클래스가 각각 독립적으로 설계하고 싶다.** 계속 종속적으로 구현하게 되는데 이것도 어렵다.  
 ~~8/22/23 Node 에 Connector 연결~~  
 ~~-- InputConnector 추가, Connector 의 axaml 없애버리고, InputConnector 로 대체. 하지만~~ **이러면 다양한 모습을 할 수 없다라는 단점이 생김.**  
-8/28/23 초기 Editor 구현
+8/28/23 초기 Editor 구현  
+8/29/23 VirtualCanvas 구현 필요 및 이를 통해서 OverlayLayer 재 구현 또는 새롭게 구현.  
 
 ## 개발 고려 사항
 1. 컨트롤들간에 데이터 송신 및 데이터 수신은 이벤트로 처리한다.  
